@@ -1,3 +1,16 @@
+"""
+## Utilities for working with Bayes nets.
+Functions:
+- extend: Returns a copy of a dictionary extended by setting a variable to a value.
+- enumerate_all: Returns the sum of entries in a probability distribution consistent with given evidence.
+- enumeration_ask: Returns the conditional probability distribution of a variable given evidence.
+
+University: University of Peloponnese, Department of Informatics and Telecommunications \n
+Course: Artificial Intelligence \n
+Authors: 
+- Giannopoulos Georgios
+- Giannopoulos Ioannis
+"""
 from probability_distribution.probdist import ProbDist
 from bayes_networks.bayes_node import BayesNode
 from bayes_networks.bayes_net import BayesNet
