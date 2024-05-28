@@ -10,7 +10,9 @@ Classes:
 Functions:
 - probability: Returns True with a probability p.
 
-The BayesNode class has methods for calculating conditional probabilities and sampling from the distribution.
+The BayesNode class has methods for: 
+- calculating conditional probabilities
+- sampling from the distribution.
 
 University: University of Peloponnese, Department of Informatics and Telecommunications
 
