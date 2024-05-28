@@ -1,5 +1,5 @@
 import numpy as np
-
+from typing import Dict, List, Optional, Union
 class ProbDist:
     """A discrete probability distribution. You name the random variable
     in the constructor, then assign and query probability of values.
@@ -10,7 +10,7 @@ class ProbDist:
     (0.125, 0.375, 0.5)
     """
 
-    def __init__(self, var_name='?', freq=None):
+    def __init__(self, var_name: str='?', freq: Optional[Dict[Union[str, int], float]] = None):
         """If freq is given, it is a dictionary of values - frequency pairs,
         then ProbDist is normalized."""
         self.prob = {}
@@ -21,20 +21,20 @@ class ProbDist:
                 self[v] = p
             self.normalize()
 
-    def __getitem__(self, val):
+    def __getitem__(self, val: Union[str, int]) -> float:
         """Given a value, return P(value)."""
         try:
             return self.prob[val]
         except KeyError:
             return 0
 
-    def __setitem__(self, val, p):
+    def __setitem__(self, val: Union[str, int], p: float):
         """Set P(val) = p."""
         if val not in self.values:
             self.values.append(val)
         self.prob[val] = p
 
-    def normalize(self):
+    def normalize(self) -> 'ProbDist':
         """Make sure the probabilities of all values sum to 1.
         Returns the normalized distribution.
         Raises a ZeroDivisionError if the sum of the values is 0."""
@@ -44,10 +44,10 @@ class ProbDist:
                 self.prob[val] /= total
         return self
 
-    def show_approx(self, numfmt='{:.3g}'):
+    def show_approx(self, numfmt: str='{:.3g}') -> str:
         """Show the probabilities rounded and sorted by key, for the
         sake of portable doctests."""
         return ', '.join([('{}: ' + numfmt).format(v, p) for (v, p) in sorted(self.prob.items())])
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "P({})".format(self.var_name)
