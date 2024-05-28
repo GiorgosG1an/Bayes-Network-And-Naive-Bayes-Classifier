@@ -1,3 +1,25 @@
+"""
+## Bayes Node
+
+This module defines the BayesNode class for representing nodes in a Bayesian network.
+
+Classes:
+- BayesNode: Represents a node in a Bayesian network. Each node represents a random variable, 
+  which can be either True or False.
+
+Functions:
+- probability: Returns True with a probability p.
+
+The BayesNode class has methods for calculating conditional probabilities and sampling from the distribution.
+
+University: University of Peloponnese, Department of Informatics and Telecommunications
+
+Course: Artificial Intelligence
+
+Authors: 
+- Giannopoulos Georgios
+- Giannopoulos Ioannis
+"""
 import random
 from typing import Dict, List, Tuple, Union
 from probability_distribution.probdist import event_values
