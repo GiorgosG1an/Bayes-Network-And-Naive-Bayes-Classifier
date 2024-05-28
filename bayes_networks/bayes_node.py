@@ -1,7 +1,8 @@
 import random
+from typing import Dict, List, Tuple, Union
 from probability_distribution.probdist import event_values
 
-def probability(p):
+def probability(p: float) -> bool:
     """Return true with probability p."""
     return p > random.uniform(0.0, 1.0)
 
@@ -9,7 +10,7 @@ class BayesNode:
     """A conditional probability distribution for a boolean variable,
     P(X | parents). Part of a BayesNet."""
 
-    def __init__(self, X, parents, cpt):
+    def __init__(self, X: str, parents: Union[str, List[str]], cpt: Union[float, Dict[Union[bool, Tuple[bool, ...]], float]]):
         """X is a variable name, and parents a sequence of variable
         names or a space-separated string. cpt, the conditional
         probability table, takes one of these forms:
@@ -50,12 +51,12 @@ class BayesNode:
             assert all(isinstance(v, bool) for v in vs)
             assert 0 <= p <= 1
 
-        self.variable = X
-        self.parents = parents
-        self.cpt = cpt
-        self.children = []
+        self.variable: str = X
+        self.parents: List[str] = parents
+        self.cpt: Dict[Tuple[bool, ...], float] = cpt
+        self.children: List = []
 
-    def p(self, value, event):
+    def p(self, value: bool, event: Dict[str, bool]) -> float:
         """Return the conditional probability
         P(X=value | parents=parent_values), where parent_values
         are the values of parents in event. (event must assign each
@@ -67,12 +68,12 @@ class BayesNode:
         ptrue = self.cpt[event_values(event, self.parents)]
         return ptrue if value else 1 - ptrue
 
-    def sample(self, event):
+    def sample(self, event: Dict[str, bool]) -> bool:
         """Sample from the distribution for this variable conditioned
         on event's values for parent_variables. That is, return True/False
         at random according with the conditional probability given the
         parents."""
         return probability(self.p(True, event))
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return repr((self.variable, ' '.join(self.parents)))
