@@ -1,5 +1,5 @@
 import numpy as np
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Tuple, Union
 class ProbDist:
     """A discrete probability distribution. You name the random variable
     in the constructor, then assign and query probability of values.
@@ -51,3 +51,16 @@ class ProbDist:
 
     def __repr__(self) -> str:
         return "P({})".format(self.var_name)
+
+
+def event_values(event: Union[Dict[str, int]], variables: List[str]) -> Tuple[int, ...]:
+    """Return a tuple of the values of variables in event.
+    >>> event_values ({'A': 10, 'B': 9, 'C': 8}, ['C', 'A'])
+    (8, 10)
+    >>> event_values ((1, 2), ['C', 'A'])
+    (1, 2)
+    """
+    if isinstance(event, tuple) and len(event) == len(variables):
+        return event
+    else:
+        return tuple([event[var] for var in variables])
