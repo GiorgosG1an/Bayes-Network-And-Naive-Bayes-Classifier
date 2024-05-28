@@ -1,3 +1,27 @@
+"""
+## Bayes Network
+
+This module defines the BayesNet class for representing a Bayesian network.
+
+Classes:
+- BayesNet: Represents a Bayesian network. Each network is a directed acyclic graph where nodes represent 
+  random variables and edges represent conditional dependencies between the variables.
+
+The BayesNet class has methods for: 
+- adding nodes to the network
+- retrieving a node for a given variable  
+- retrieving the domain of a variable
+- representing the network as a string.
+
+University: University of Peloponnese, Department of Informatics and Telecommunications
+
+Course: Artificial Intelligence
+
+Authors: 
+- Giannopoulos Georgios
+- Giannopoulos Ioannis
+
+"""
 from typing import List, Optional, Union
 from bayes_networks.bayes_node import BayesNode
 
