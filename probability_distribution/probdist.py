@@ -1,3 +1,29 @@
+"""
+## Probability Distribution
+
+This module defines the ProbDist class for representing a discrete probability distribution, 
+and a utility function for handling events.
+
+Classes:
+- ProbDist: Represents a discrete probability distribution. You name the random variable
+  in the constructor, then assign and query probability of values.
+
+Functions:
+- event_values: Returns a tuple of the values of variables in an event.
+
+The ProbDist class has methods for: 
+- setting and getting the probability of a value 
+- normalizing the distribution, 
+- representing the distribution as a string.
+
+University: University of Peloponnese, Department of Informatics and Telecommunications
+
+Course: Artificial Intelligence
+
+Authors: 
+- Giannopoulos Georgios
+- Giannopoulos Ioannis
+"""
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Union
 class ProbDist:
