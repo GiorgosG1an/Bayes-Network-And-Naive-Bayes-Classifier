@@ -5,8 +5,10 @@ Functions:
 - enumerate_all: Returns the sum of entries in a probability distribution consistent with given evidence.
 - enumeration_ask: Returns the conditional probability distribution of a variable given evidence.
 
-University: University of Peloponnese, Department of Informatics and Telecommunications \n
-Course: Artificial Intelligence \n
+University: University of Peloponnese, Department of Informatics and Telecommunications
+
+Course: Artificial Intelligence
+
 Authors: 
 - Giannopoulos Georgios
 - Giannopoulos Ioannis
