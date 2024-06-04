@@ -160,3 +160,7 @@ class NaiveBayesClassifier():
 
         return correct_prediction / len(y_true)
     
+    def __repr__(self) -> str:
+        return f"NaiveBayesClassifier(spam_email_count={self.spam_email_count}, ham_email_count={self.ham_email_count}, total_emails={self.total_emails}, unique_words={len(self.words)}, p_spam={self.p_spam}, p_ham={self.p_ham})"
+    
+        
