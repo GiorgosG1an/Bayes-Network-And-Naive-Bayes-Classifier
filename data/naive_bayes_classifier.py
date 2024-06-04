@@ -1,3 +1,24 @@
+"""
+## Naive Bayes Classifier
+
+This module contains the Naive Bayes Classifier for spam detection. 
+
+Classes:
+- NaiveBayesClassifier: Naive Bayes Classifier for spam detection.
+
+The NaiveBayesClassifier class has methods for: 
+- initializing the classifier
+- training the classifier
+- predicting the labels of the given emails.
+
+University: University of Peloponnese, Department of Informatics and Telecommunications
+
+Course: Artificial Intelligence
+
+Authors: 
+- Giannopoulos Georgios
+- Giannopoulos Ioannis
+"""
 from collections import defaultdict
 from typing import List, Set
 
