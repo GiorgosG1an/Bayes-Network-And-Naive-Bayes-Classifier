@@ -49,18 +49,21 @@ def main() -> None:
     result_p_apati_given_evidence = enumeration_ask('Apati', evidence, bayes_net)
     print("P(Apati | Taksidevei=True, AgoraEksoterikou=True, AgoraDiadiktiou=False, AgoraSxetikiMeIpologisti=True):", result_p_apati_given_evidence.show_approx())
     
+# ==========================================================================================================================================
+#                                   Naive Bayes Classifier for spam detection
+# ==========================================================================================================================================
 
-     # Download and extract dataset
+    # Download and extract dataset
     url = "http://nlp.cs.aueb.gr/software_and_datasets/Enron-Spam/preprocessed/enron1.tar.gz"
     filename = "enron1.tar.gz"
     download_dataset(url, filename)
-    emails, labels = extract_dataset(filename)
+    emails, y = extract_dataset(filename)
 
     # Clean dataset
     cleaned_emails = clean_emails(emails)
 
     # Split dataset
-    emails_train, y_train, emails_test, y_test = split_data(cleaned_emails, labels)
+    emails_train, y_train, emails_test, y_test = split_data(cleaned_emails, y)
 
     print('Emails in training set:', len(emails_train))
     print('Emails in test set:', len(emails_test))
@@ -72,9 +75,19 @@ def main() -> None:
     # Predict on the test set
     y_pred = nb_classifier.predict(emails_test)
 
-     # Evaluate the classifier
-    accuracy = sum(1 for yt, yp in zip(y_test, y_pred) if yt == yp) / len(y_test)
-    print('Accuracy:', accuracy)
+    # Calculate accuracy
+    accuracy = nb_classifier.accuracy(y_test, y_pred)
+    print(f"Accuracy without Laplace Smoothing and underflow prevention: {round(accuracy, 3)}")
+    # train with Laplace Smoothing set to True
+    nb_classifier.train(emails_train, y_train, laplace_smoothing=True)
+    y_pred = nb_classifier.predict(emails_test, prevent_underflow=False)
+    accuracy = nb_classifier.accuracy(y_test, y_pred)
+    print(f"Accuracy with Laplace Smoothing set True and prevent underflow to False: {round(accuracy, 3)}")
+    # train with Laplace Smoothing set to True and prevent underflow set to True
+    nb_classifier.train(emails_train, y_train, laplace_smoothing=True)
+    y_pred = nb_classifier.predict(emails_test, prevent_underflow=True)
+    accuracy = nb_classifier.accuracy(y_test, y_pred)
+    print(f"Accuracy with Laplace Smoothing set True and prevent underflow to True: {round(accuracy, 3)}")
 
 if __name__ == "__main__":
     main()
