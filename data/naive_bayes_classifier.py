@@ -22,7 +22,7 @@ Authors:
 """
 from collections import defaultdict
 from typing import List, Set
-
+import numpy as np
 
 class NaiveBayesClassifier():
     """
@@ -98,32 +98,56 @@ class NaiveBayesClassifier():
                 self.p_word_given_spam[word] = self.spam_word_count[word] / self.spam_email_count
                 self.p_word_given_ham[word] = self.ham_word_count[word] / self.ham_email_count
         
-    def predict(self, emails) -> List[str]:
+    def predict(self, emails, prevent_underflow=False) -> List[str]:
         """
         Predict the labels of the given emails.
+        
+        If an email contains a lot of words, the probability 
+        of the email being spam or ham can become very small, close to 0, 
+        leading to underflow when multiplying the probabilities.
+        To prevent underflow, set `prevent_underflow` to True to use the log probabilities.
+        
+        Args:
+            - emails (list): A list of emails. Each element of the list is expected to be a set of words.
+            - prevent_underflow (bool, optional): If True, prevent underflow by using the log probabilities. Defaults to False.
         """
         y_pred = []
+        if prevent_underflow:
+            for email in emails:
+                # calculate the log probabilities
+                p_spam_given_email = np.log(self.p_spam)
+                p_ham_given_email = np.log(self.p_ham)
 
-        # iterate over each email
-        for email in emails:
-            p_spam_given_email = self.p_spam
-            p_ham_given_email = self.p_ham
+                for word in email:
+                    if word in self.words:
+                        p_spam_given_email += np.log(self.p_word_given_spam[word])
+                        p_ham_given_email += np.log(self.p_word_given_ham[word])
+                # predict the label based on the probabilities
+                if p_spam_given_email > p_ham_given_email:
+                    y_pred.append('spam')
+                else:
+                    y_pred.append('ham')     
+        else:
+            # iterate over each email
+            for email in emails:
+                p_spam_given_email = self.p_spam
+                p_ham_given_email = self.p_ham
 
-            # iterate over each word in the email
-            for word in email:
+                # iterate over each word in the email
+                for word in email:
 
-                # if the word is in the set of unique words, update the probabilities, otherwise the word was not in the training set so we ignore it
-                if word in self.words:
-                    p_spam_given_email *= self.p_word_given_spam[word]
-                    p_ham_given_email *= self.p_word_given_ham[word]
-
-            # predict the label based on the probabilities
-            if p_spam_given_email > p_ham_given_email:
-                y_pred.append('spam')
-            else:
-                y_pred.append('ham')
-        
+                    # if the word is in the set of unique words, update the probabilities, otherwise the word was not in the training set so we ignore it
+                    if word in self.words:
+                        p_spam_given_email *= self.p_word_given_spam[word]
+                        p_ham_given_email *= self.p_word_given_ham[word]
+                # predict the label based on the probabilities
+                if p_spam_given_email > p_ham_given_email:
+                    y_pred.append('spam')
+                else:
+                    y_pred.append('ham')
+                    
         return y_pred
+            
     
     def accuracy(self, y_true: List[str], y_pred: List[str]) -> float:
         """
