@@ -10,6 +10,7 @@ The NaiveBayesClassifier class has methods for:
 - initializing the classifier
 - training the classifier
 - predicting the labels of the given emails.
+- calculating the accuracy of the classifier.
 
 University: University of Peloponnese, Department of Informatics and Telecommunications
 
@@ -21,6 +22,7 @@ Authors:
 """
 from collections import defaultdict
 from typing import List, Set
+
 
 class NaiveBayesClassifier():
     """
@@ -52,12 +54,17 @@ class NaiveBayesClassifier():
         self.words = set()
         """Set of all unique words in spam and ham emails"""
 
-    def train(self, emails, labels):
+    def train(self, emails: List[str], labels: List[str], laplace_smoothing=False):
         """
         Train the Naive Bayes Classifier.
 
         Calculate the probabilities of spam and ham emails and 
         the probability of each word given that the email is spam or ham.
+
+        Args:
+            - emails (list): A list of emails. Each element of the list is expected to be a set of words.
+            - labels (list): A list of corresponding labels. Each element of the list is expected to be a string representing a label.
+            - laplace_smoothing (bool, optional): If True, apply Laplace Smoothing. Defaults to False.
         """
         self.total_emails = len(emails)
         self.spam_email_count = sum(1 for label in labels if label == 'spam')
@@ -81,9 +88,15 @@ class NaiveBayesClassifier():
         self.words = set(self.spam_word_count.keys()).union(set(self.ham_word_count.keys()))
 
         # Calculate the probability of each word given that the email is spam or ham
-        for word in self.words:
-            self.p_word_given_spam[word] = self.spam_word_count[word] / self.spam_email_count
-            self.p_word_given_ham[word] = self.ham_word_count[word] / self.ham_email_count
+        # If laplace_smoothing is True, apply Laplace Smoothing
+        if laplace_smoothing:
+            for word in self.words:
+                self.p_word_given_spam[word] = (self.spam_word_count[word] + 1) / (self.spam_email_count + 2)
+                self.p_word_given_ham[word] = (self.ham_word_count[word] + 1) / (self.ham_email_count + 2)
+        else:
+            for word in self.words:
+                self.p_word_given_spam[word] = self.spam_word_count[word] / self.spam_email_count
+                self.p_word_given_ham[word] = self.ham_word_count[word] / self.ham_email_count
         
     def predict(self, emails) -> List[str]:
         """
