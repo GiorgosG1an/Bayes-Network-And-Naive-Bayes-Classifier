@@ -111,3 +111,15 @@ class NaiveBayesClassifier():
                 y_pred.append('ham')
         
         return y_pred
+    
+    def accuracy(self, y_true: List[str], y_pred: List[str]) -> float:
+        """
+        Calculate the accuracy of the classifier.
+        """
+        correct_prediction = 0
+        for yt, yp in zip(y_true, y_pred):
+            if yt == yp:
+                correct_prediction += 1
+
+        return correct_prediction / len(y_true)
+    
