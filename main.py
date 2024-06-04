@@ -15,6 +15,10 @@ from probability_distribution.probdist import ProbDist
 from bayes_networks.bayes_node import BayesNode
 from bayes_networks.bayes_net import BayesNet
 from bayes_networks.bayes_network_utils import extend, enumerate_all, enumeration_ask
+from data.download_data import download_dataset, extract_dataset
+from data.clean_data import clean_emails
+from data.split_data import split_data
+from data.naive_bayes_classifier import NaiveBayesClassifier
 
 def main() -> None:
 
@@ -45,5 +49,32 @@ def main() -> None:
     result_p_apati_given_evidence = enumeration_ask('Apati', evidence, bayes_net)
     print("P(Apati | Taksidevei=True, AgoraEksoterikou=True, AgoraDiadiktiou=False, AgoraSxetikiMeIpologisti=True):", result_p_apati_given_evidence.show_approx())
     
+
+     # Download and extract dataset
+    url = "http://nlp.cs.aueb.gr/software_and_datasets/Enron-Spam/preprocessed/enron1.tar.gz"
+    filename = "enron1.tar.gz"
+    download_dataset(url, filename)
+    emails, labels = extract_dataset(filename)
+
+    # Clean dataset
+    cleaned_emails = clean_emails(emails)
+
+    # Split dataset
+    emails_train, y_train, emails_test, y_test = split_data(cleaned_emails, labels)
+
+    print('Emails in training set:', len(emails_train))
+    print('Emails in test set:', len(emails_test))
+
+    # Train Naive Bayes Classifier
+    nb_classifier = NaiveBayesClassifier()
+    nb_classifier.train(emails_train, y_train)
+
+    # Predict on the test set
+    y_pred = nb_classifier.predict(emails_test)
+
+     # Evaluate the classifier
+    accuracy = sum(1 for yt, yp in zip(y_test, y_pred) if yt == yp) / len(y_test)
+    print('Accuracy:', accuracy)
+
 if __name__ == "__main__":
     main()
