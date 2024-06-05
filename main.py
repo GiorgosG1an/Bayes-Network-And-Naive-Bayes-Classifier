@@ -21,6 +21,9 @@ from data.split_data import split_data
 from data.naive_bayes_classifier import NaiveBayesClassifier
 
 def main() -> None:
+    print("\t\t2η Εργασία Τεχνητής Νοημοσύνης")
+    print("\t\t\tΕαρινό εξάμηνο 2024\n")
+    print("- ΓΙΑΝΝΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ\n- ΓΙΑΝΝΟΠΟΥΛΟΣ ΙΩΑΝΝΗΣ\n")
 
     node_specs = [
         ('Taksidevei', [], 0.05), 
@@ -32,7 +35,7 @@ def main() -> None:
     ]
 
     bayes_net = BayesNet(node_specs)
-    print("\t\tDiktyo Bayes\n",bayes_net)
+    print(f"\t\t\tΔίκτυο Bayes\n\n {bayes_net}")
 
     # Question 2.2:
     # 1. Probability that the current transaction is a fraud (P(Apati))
@@ -52,7 +55,7 @@ def main() -> None:
 # ==========================================================================================================================================
 #                                   Naive Bayes Classifier for spam detection
 # ==========================================================================================================================================
-
+    print("\n\t\tNaive Bayes Classifier for spam detection\n")
     # Download and extract dataset
     url = "http://nlp.cs.aueb.gr/software_and_datasets/Enron-Spam/preprocessed/enron1.tar.gz"
     filename = "enron1.tar.gz"
@@ -89,5 +92,6 @@ def main() -> None:
     accuracy = nb_classifier.accuracy(y_test, y_pred)
     print(f"Accuracy with Laplace Smoothing set True and prevent underflow to True: {round(accuracy, 3)}")
 
+    print(nb_classifier)
 if __name__ == "__main__":
     main()
