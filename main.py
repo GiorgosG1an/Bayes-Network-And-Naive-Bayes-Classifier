@@ -92,23 +92,40 @@ def main() -> None:
     accuracy = nb_classifier.accuracy(y_test, y_pred)
     print(f"Accuracy with Laplace Smoothing set True and prevent underflow to True: {round(accuracy, 3)}")
 
-    # map spam to 1 and ham to 0
-    # y_test = [1 if label == 'spam' else 0 for label in y_test]
-    # y_pred = [1 if label == 'spam' else 0 for label in y_pred]
-    # from sklearn.metrics import classification_report, confusion_matrix, roc_curve, roc_auc_score
-    # import matplotlib.pyplot as plt
-    # print(classification_report(y_test, y_pred))
-    # print("\nConfusion Matrix:")
-    # print(confusion_matrix(y_test, y_pred))
-    # print("\nROC AUC Score:", roc_auc_score(y_test, y_pred))
-    # fpr, tpr, thresholds = roc_curve(y_test, y_pred)
-    # plt.figure(figsize=(8, 6))
-    # plt.plot([0, 1], [0, 1], 'r--')
-    # plt.plot(fpr, tpr)
-    # plt.xlabel('False Positive Rate')
-    # plt.ylabel('True Positive Rate')
-    # plt.title('ROC Curve')
-    # plt.show()
+# More evaluation metrics, uncomment to see them
+#     # map spam to 1 and ham to 0
+#     y_test = [1 if label == 'spam' else 0 for label in y_test]
+#     y_pred = [1 if label == 'spam' else 0 for label in y_pred]
+
+#     from sklearn.metrics import classification_report, confusion_matrix, roc_curve, roc_auc_score
+#     import matplotlib.pyplot as plt
+# # Classification Report
+#     print(classification_report(y_test, y_pred))
+
+# # Confusion Matrix
+#     print("\nConfusion Matrix:")
+#     conf_matrix = confusion_matrix(y_test, y_pred)
+#     print(conf_matrix)
+#     plt.imshow(conf_matrix, cmap='summer', interpolation='None')
+#     labels = ['Ham', 'Spam']
+#     plt.xticks([0, 1], labels)
+#     plt.yticks([0, 1], labels)
+#     plt.gca().xaxis.tick_top()
+#     for i in range(conf_matrix.shape[0]):
+#         for j in range(conf_matrix.shape[1]):
+#             plt.text(j, i, conf_matrix[i, j], ha='center', va='center', color='black')
+#     plt.title('Confusion Matrix')
+#     plt.show()
+# # ROC Curve and ROC AUC Score
+#     print("\nROC AUC Score:", roc_auc_score(y_test, y_pred))
+#     fpr, tpr, thresholds = roc_curve(y_test, y_pred)
+#     plt.figure(figsize=(8, 6))
+#     plt.plot([0, 1], [0, 1], 'r--')
+#     plt.plot(fpr, tpr)
+#     plt.xlabel('False Positive Rate')
+#     plt.ylabel('True Positive Rate')
+#     plt.title('ROC Curve')
+#     plt.show()
     
     print(nb_classifier)
 if __name__ == "__main__":
