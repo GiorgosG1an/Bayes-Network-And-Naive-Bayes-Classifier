@@ -18,7 +18,7 @@ from bayes_networks.bayes_network_utils import extend, enumerate_all, enumeratio
 from data.download_data import download_dataset, extract_dataset
 from data.clean_data import clean_emails
 from data.split_data import split_data
-from data.naive_bayes_classifier import NaiveBayesClassifier
+from naive_bayes.naive_bayes_classifier import NaiveBayesClassifier
 
 def main() -> None:
     print("\t\t2η Εργασία Τεχνητής Νοημοσύνης")
@@ -91,6 +91,22 @@ def main() -> None:
     y_pred = nb_classifier.predict(emails_test, prevent_underflow=True)
     accuracy = nb_classifier.accuracy(y_test, y_pred)
     print(f"Accuracy with Laplace Smoothing set True and prevent underflow to True: {round(accuracy, 3)}")
+    # map spam to 1 and ham to 0
+    # y_test = [1 if label == 'spam' else 0 for label in y_test]
+    # y_pred = [1 if label == 'spam' else 0 for label in y_pred]
+
+    # from sklearn.metrics import classification_report, confusion_matrix, roc_curve, roc_auc_score
+    # import matplotlib.pyplot as plt
+    # print(classification_report(y_test, y_pred))
+    # print("\nConfusion Matrix:")
+    # print(confusion_matrix(y_test, y_pred))
+    # print("\nROC AUC Score:", roc_auc_score(y_test, y_pred))
+    # fpr, tpr, thresholds = roc_curve(y_test, y_pred)
+    # plt.plot(fpr, tpr)
+    # plt.xlabel('False Positive Rate')
+    # plt.ylabel('True Positive Rate')
+    # plt.title('ROC Curve')
+    # plt.show()
 
     print(nb_classifier)
 if __name__ == "__main__":
